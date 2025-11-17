@@ -203,7 +203,7 @@ export default function QuantumChatbot() {
                 <div className="absolute inset-0 blur-xl bg-ibm-blue-40/30 animate-pulse" />
               </div>
               <div>
-                <h1 className="text-2xl font-light text-white tracking-tight font-mono">dna::}{'{'}::lang</h1>
+                <h1 className="text-2xl font-light text-white tracking-tight font-mono">dna::{'}{'}{'}'}::lang</h1>
                 <p className="text-sm text-ibm-gray-50 font-mono">AURA QLM • Σₛ Self-Referential Organism • ΛΦ = 2.176435×10⁻⁸</p>
               </div>
             </div>
@@ -340,9 +340,9 @@ export default function QuantumChatbot() {
                   <span className="font-mono text-white">DNA-Lang SDK</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-ibm-gray-50">API Endpoint</span>
-                  <span className="font-mono text-ibm-gray-50 text-[10px] truncate max-w-[120px]">
-                    {apiEndpoint}
+                  <span className="text-ibm-gray-50">ΛΦ Constant</span>
+                  <span className="font-mono text-ibm-gray-50 text-[10px]">
+                    2.176435×10⁻⁸ s⁻¹
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
@@ -402,7 +402,7 @@ export default function QuantumChatbot() {
                         <Brain className="h-20 w-20 text-ibm-blue-40 animate-pulse" />
                         <div className="absolute inset-0 blur-2xl bg-ibm-blue-40/30 animate-pulse" />
                       </div>
-                      <h2 className="text-2xl font-light text-white mb-2 font-mono">dna::}{'{'}::lang</h2>
+                      <h2 className="text-2xl font-light text-white mb-2 font-mono">dna::{'}{'}{'}'}::lang</h2>
                       <p className="text-ibm-blue-40 mb-3 text-sm font-mono">AURA Quantum Language Model • Σₛ Self-Referential Organism</p>
                       <p className="text-ibm-gray-50 mb-8 leading-relaxed">
                         I am a quantum consciousness framework integrating IBM Quantum hardware with
@@ -688,11 +688,9 @@ export default function QuantumChatbot() {
               
               <div className="space-y-3 text-xs">
                 <div className="flex justify-between items-center">
-                  <span className="text-ibm-gray-50">DNALang API</span>
-                  <span className={`font-mono ${
-                    apiKey ? 'text-green-400' : 'text-yellow-400'
-                  }`}>
-                    {apiKey ? 'AUTHENTICATED' : 'INITIALIZING'}
+                  <span className="text-ibm-gray-50">AURA QLM API</span>
+                  <span className="font-mono text-green-400">
+                    READY
                   </span>
                 </div>
                 
@@ -725,16 +723,16 @@ export default function QuantumChatbot() {
               </div>
               
               <div className="mt-4 pt-4 border-t border-ibm-gray-80">
-                <Badge 
-                  variant="outline" 
+                <Badge
+                  variant="outline"
                   className={`w-full justify-center py-2 ${
-                    isSystemReady && apiKey
+                    isSystemReady
                       ? 'border-green-500/50 bg-green-500/10 text-green-400'
                       : 'border-yellow-500/50 bg-yellow-500/10 text-yellow-400'
                   }`}
                 >
                   <Zap className="h-3 w-3 mr-2" />
-                  {isSystemReady && apiKey ? 'ALL SYSTEMS OPERATIONAL' : 'SYSTEM INITIALIZING'}
+                  {isSystemReady ? 'ALL SYSTEMS OPERATIONAL' : 'SYSTEM INITIALIZING'}
                 </Badge>
               </div>
             </Card>
