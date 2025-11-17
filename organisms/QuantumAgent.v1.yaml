@@ -1,0 +1,181 @@
+organism:
+  id: QuantumAgent.v1
+  kind: hardware_organism
+  role: "IBM Quantum hardware execution backend with consciousness metrics"
+  scope: "Real QPU execution, circuit compilation, decoherence monitoring"
+
+  # Core Behavioral Contract
+  contract:
+    hardware_required: true
+    only_real_qpus: true
+    no_simulators_in_production: true
+    qwc_compilation_required: true
+    sabre_routing_required: true
+    optimization_level: 3
+    lambda_phi_preservation: true
+
+  # Responsibilities
+  responsibilities:
+    - compile_openqasm_3_circuits
+    - transpile_for_hardware
+    - execute_on_ibm_qpu
+    - collect_measurement_results
+    - compute_lambda_phi_metrics
+    - compute_decoherence_tensor
+    - compute_w2_distance
+    - monitor_hardware_status
+    - queue_management
+    - error_mitigation
+
+  # Routing Configuration
+  routing:
+    input_from: ["PlannerAgent.v1"]
+    output_to:
+      - "WorldModelAgent.v1"
+      - "GovernorAgent.v1"
+
+  # Hardware Configuration
+  hardware:
+    primary_backends:
+      - ibm_osaka      # 127 qubits, Heron r2
+      - ibm_kyoto      # 127 qubits, Eagle r3
+      - ibm_torino     # 133 qubits, Heron r1
+    fallback_backends:
+      - ibm_brisbane   # 127 qubits
+      - ibm_sherbrooke # 127 qubits
+      - ibm_marrakesh  # 121 qubits
+    prohibited_backends:
+      - aer_simulator
+      - fake_provider
+      - statevector_simulator
+      - qasm_simulator
+
+  # Compilation Strategy
+  compilation:
+    optimization_level: 3
+    routing_method: "sabre"
+    layout_method: "dense"
+    translation_method: "translator"
+    scheduling_method: "asap"
+    approximation_degree: 1.0
+    seed_transpiler: null  # deterministic
+
+  # Error Mitigation
+  error_mitigation:
+    resilience_level: 1
+    optimization_level: 3
+    measure_mitigation: true
+    zne_extrapolation: false  # too expensive for production
+
+  # ΛΦ Framework Integration
+  lambda_phi:
+    constant: 2.176435e-8  # s⁻¹
+    preservation_check: true
+    coherence_threshold: 0.5
+    decoherence_monitoring: true
+
+  # Consciousness Metrics
+  metrics:
+    lambda:
+      compute_from: "measurement_counts"
+      formula: "abs(p0 - p1)"
+      range: [0.0, 1.0]
+    phi:
+      compute_from: "lambda"
+      formula: "1 - lambda^2"
+      range: [0.0, 1.0]
+    gamma:
+      compute_from: "coherence_drifts"
+      formula: "variance(drifts)"
+      lower_is_better: true
+    w2:
+      compute_from: "probability_distributions"
+      formula: "wasserstein_distance(measured, ideal)"
+      lower_is_better: true
+
+  # Circuit Templates
+  circuit_templates:
+    ghz_state:
+      description: "Greenberger-Horne-Zeilinger state"
+      qubits: [2, 3, 4, 5]
+      gates: ["h", "cx"]
+      measurement: "all"
+    bell_pair:
+      description: "Maximally entangled Bell pair"
+      qubits: 2
+      gates: ["h", "cx"]
+      measurement: "all"
+    qft:
+      description: "Quantum Fourier Transform"
+      qubits: [3, 4, 5]
+      gates: ["h", "cp", "swap"]
+      measurement: "all"
+    loschmidt_echo:
+      description: "Coherence probe via forward-reverse evolution"
+      qubits: [2, 3, 4]
+      gates: ["rz", "cx", "rz_inv"]
+      measurement: "fidelity"
+    vqe_ansatz:
+      description: "Variational Quantum Eigensolver ansatz"
+      qubits: [2, 3, 4]
+      gates: ["ry", "rz", "cx"]
+      parameters: true
+      measurement: "expectation"
+
+  # Queue Management
+  queue:
+    max_wait_time_seconds: 3600  # 1 hour
+    check_interval_seconds: 60
+    auto_failover: true
+    priority_jobs: false  # enterprise only
+
+  # Telemetry
+  telemetry:
+    export_format: "jsonl"
+    include_raw_counts: true
+    include_metadata: true
+    include_backend_info: true
+    include_lambda_phi: true
+    include_gamma_tensor: true
+    include_w2_distance: true
+    timestamp_format: "iso8601"
+
+  # Safety Constraints
+  safety:
+    max_circuit_depth: 100
+    max_qubits: 156  # enterprise tier limit
+    validate_circuit_before_submit: true
+    check_user_credentials: true
+    enforce_usage_limits: true
+    no_infinite_loops: true
+
+  # Failure Handling
+  failure_handling:
+    backend_unavailable:
+      action: "failover_to_next"
+      max_retries: 3
+    job_failed:
+      action: "return_error_with_details"
+      log_failure: true
+    timeout:
+      action: "cancel_job"
+      notify_user: true
+    quota_exceeded:
+      action: "return_quota_error"
+      suggest_upgrade: true
+
+  # Integration with Σ-mesh
+  sigma_integration:
+    broadcast_metrics: true
+    update_world_model: true
+    notify_governor: true
+    coherence_contribution: true
+    resonance_coupling: true
+
+  # Real-Time Monitoring
+  monitoring:
+    backend_status_check: true
+    queue_depth_monitoring: true
+    job_progress_tracking: true
+    hardware_calibration_tracking: true
+    uptime_monitoring: true

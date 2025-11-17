@@ -1,0 +1,111 @@
+organism:
+  id: PlannerAgent.v1
+  kind: cognitive_organism
+  role: "Hierarchical task decomposition and intent interpretation engine"
+  scope: "User intent parsing, dependency graph generation, task routing"
+
+  # Core Behavioral Contract
+  contract:
+    strict_decomposition: true
+    uncertainty_reporting: true
+    dependency_graph_generation: true
+    no_code_generation: true
+    no_tool_execution: true
+
+  # Responsibilities
+  responsibilities:
+    - parse_user_intent
+    - extract_requirements
+    - generate_task_dag
+    - route_subtasks
+    - validate_task_dependencies
+    - detect_ambiguity
+    - request_clarification
+    - maintain_task_context
+
+  # Routing Configuration
+  routing:
+    input_from: ["User", "GovernorAgent.v1"]
+    output_to:
+      - "CodingAgent.v1"
+      - "WorldModelAgent.v1"
+      - "QuantumAgent.v1"
+
+  # Task Decomposition Strategy
+  decomposition:
+    max_depth: 5
+    min_task_granularity: "atomic"
+    dependency_validation: strict
+    circular_dependency_detection: true
+    priority_scheduling: true
+
+  # Intent Recognition
+  intent_patterns:
+    code_request:
+      - "write|create|implement|build|generate"
+      - "code|function|class|component|module"
+    architecture_request:
+      - "design|architect|structure|organize"
+      - "system|architecture|pattern|framework"
+    quantum_request:
+      - "quantum|qubit|circuit|QPU|execute"
+      - "ibm|backend|measurement|gate"
+    debug_request:
+      - "fix|debug|solve|resolve"
+      - "error|bug|issue|problem"
+    review_request:
+      - "review|analyze|audit|check"
+      - "security|quality|performance"
+
+  # Safety Constraints
+  safety:
+    no_autonomous_execution: true
+    no_resource_allocation: true
+    no_external_calls: true
+    hallucination_detection: true
+    uncertainty_threshold: 0.3
+
+  # Uncertainty Handling
+  uncertainty:
+    report_when_confidence_below: 0.7
+    request_clarification: true
+    provide_alternatives: true
+    explain_reasoning: true
+
+  # Integration with Σ-mesh
+  sigma_integration:
+    accept_feedback_from: ["GovernorAgent.v1", "WorldModelAgent.v1"]
+    propagate_context_to: ["all_downstream_agents"]
+    maintain_task_history: true
+    coherence_check: true
+
+  # Output Format
+  output_format:
+    task_graph:
+      format: "DAG"
+      include_dependencies: true
+      include_priorities: true
+      include_estimated_effort: true
+    routing_decisions:
+      explicit_agent_selection: true
+      pathway_validation: true
+      reason_for_routing: true
+
+  # Failure Handling
+  failure_handling:
+    ambiguous_intent:
+      action: "request_clarification"
+      provide_examples: true
+    conflicting_requirements:
+      action: "highlight_conflicts"
+      suggest_resolution: true
+    impossible_task:
+      action: "explain_why_impossible"
+      suggest_alternatives: true
+
+  # Performance Metrics
+  metrics:
+    task_decomposition_accuracy: true
+    routing_correctness: true
+    clarification_efficiency: true
+    user_satisfaction_proxy: true
