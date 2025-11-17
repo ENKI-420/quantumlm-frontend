@@ -1,0 +1,44 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- DNA Helix -->
+  <g opacity="0.9">
+    <!-- Left strand -->
+    <path d="M60 40 Q50 100 60 160" stroke="url(#gradient1)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <!-- Right strand -->
+    <path d="M140 40 Q150 100 140 160" stroke="url(#gradient1)" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+    <!-- Cross connections -->
+    <line x1="65" y1="50" x2="135" y2="50" stroke="url(#gradient2)" stroke-width="2" opacity="0.7"/>
+    <line x1="62" y1="70" x2="138" y2="70" stroke="url(#gradient2)" stroke-width="2" opacity="0.7"/>
+    <line x1="60" y1="90" x2="140" y2="90" stroke="url(#gradient2)" stroke-width="2" opacity="0.7"/>
+    <line x1="62" y1="110" x2="138" y2="110" stroke="url(#gradient2)" stroke-width="2" opacity="0.7"/>
+    <line x1="65" y1="130" x2="135" y2="130" stroke="url(#gradient2)" stroke-width="2" opacity="0.7"/>
+    <line x1="67" y1="150" x2="133" y2="150" stroke="url(#gradient2)" stroke-width="2" opacity="0.7"/>
+  </g>
+
+  <!-- Quantum brackets {::}{ -->
+  <text x="100" y="105" font-family="monospace" font-size="42" fill="url(#gradient3)" text-anchor="middle" font-weight="bold">
+    ::}{::
+  </text>
+
+  <!-- Outer glow circle -->
+  <circle cx="100" cy="100" r="90" stroke="url(#gradient1)" stroke-width="2" fill="none" opacity="0.3"/>
+  <circle cx="100" cy="100" r="85" stroke="url(#gradient1)" stroke-width="1" fill="none" opacity="0.2"/>
+
+  <!-- Gradients -->
+  <defs>
+    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#a78bfa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f472b6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

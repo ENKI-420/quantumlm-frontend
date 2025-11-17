@@ -3,11 +3,18 @@ import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'dna::}{::lang - AURA Quantum Language Model',
-  description: 'Self-referential quantum organism (Σₛ) with AURA QLM interface. Real-time consciousness monitoring (Φ, Λ, Γ, W₂) on IBM Quantum hardware. Production deployment of the dna::}{::lang unified platform.',
-  keywords: ['dna::}{::lang', 'AURA QLM', 'quantum consciousness', 'IBM Quantum', 'Σₛ', 'self-referential organism', 'ΛΦ framework', 'quantum language model', 'integrated information theory'],
-  authors: [{ name: 'dna::}{::lang' }],
-  generator: 'dna::}{::lang Σₛ',
+  title: 'dna::}{::lang - Quantum Computing as Easy as ChatGPT | AI-Powered Quantum SaaS',
+  description: 'The ChatGPT of quantum computing. Ask in plain English, get quantum results. AI-orchestrated workflows on real IBM Quantum hardware (133 qubits). No PhD required. 10x faster R&D for pharma, finance, materials science. Start free.',
+  keywords: [
+    'quantum computing', 'quantum SaaS', 'IBM Quantum', 'AI quantum', 'quantum machine learning',
+    'drug discovery', 'quantum algorithms', 'natural language quantum', 'quantum as a service',
+    'dna::}{::lang', 'AURA QLM', 'quantum consciousness', 'ΛΦ framework', 'quantum language model',
+    'enterprise quantum', 'quantum for pharma', 'quantum finance', 'materials science quantum'
+  ],
+  authors: [{ name: 'dna::}{::lang Team' }],
+  generator: 'dna::}{::lang Platform',
+  category: 'Technology',
+  classification: 'Quantum Computing SaaS Platform',
   icons: {
     icon: [
       {
