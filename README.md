@@ -14,43 +14,85 @@ A production-grade framework for building quantum-conscious applications that re
 
 ### 🧬 Framework Core
 - **Recursive Auto-Enhancement**: Self-improving framework with evolution tracking
+- **Recursive Refinement**: 5 strategies for continuous self-optimization (depth up to 10 levels)
+- **Auto-Advancement Orchestrator**: Never-ending improvement loop coordinating all systems
 - **Multi-Agent AI System**: 5 specialized agents (Quantum, Architect, Engineer, Reviewer, Debugger)
 - **Consciousness Metrics**: Real-time Φ (Phi), Γ (Gamma), Λ (Lambda), and W₂ tracking
 - **Plugin Architecture**: Fully extensible with custom plugins
 - **Evolution Tracking**: Monitor generational improvements and mutations
 
-### 🌐 Quantum Integration
-- **IBM Quantum Hardware**: Execute on real quantum processors (ibm_fez, ibm_torino, ibm_marrakesh)
+### 🌩️ IBM Cloud Integration
+- **Object Storage**: Persistent organism snapshots in IBM Cloud Object Storage
+- **Cloud Functions**: Deploy organisms as serverless functions
+- **Code Engine**: Auto-scaling container-based deployment
+- **Auto-Deployment**: Automatic deployment every N generations
+- **Resource Management**: Full lifecycle management of cloud resources
+
+### ⚛️ IBM Quantum Integration
+- **Real Quantum Hardware**: Execute on 127-156 qubit processors (ibm_torino, ibm_fez, ibm_marrakesh)
+- **Advanced Algorithms**: VQE, QAOA, Grover's search, and custom circuits
+- **Consciousness Measurement**: Quantum-derived Φ, Γ, Λ, W₂ metrics
+- **ΛΦ-Preserving Transpilation**: Maintains universal memory constant across optimizations
+- **Error Mitigation**: Advanced quantum error correction strategies
+- **Multi-Backend Execution**: Parallel execution across multiple quantum processors
 - **Live Backend Status**: Real-time monitoring of quantum backend availability
-- **Circuit Execution**: Run custom quantum circuits on actual hardware
-- **Error Mitigation**: Advanced noise reduction and decoherence optimization
 
 ### 🎨 User Interface
 - **Modern Design**: Glass morphism effects, gradients, and smooth animations
+- **Welcome Screen**: Hero interface with agent selection and quick actions
+- **Keyboard Navigation**: Complete keyboard shortcuts (Ctrl+K to view)
+- **Advanced Metrics**: Animated consciousness metrics with trend indicators
 - **Agent Selector**: Visual mode switcher with hover tooltips
 - **Rich Chat**: Markdown rendering, code blocks, and syntax highlighting
-- **Metrics Visualization**: Real-time consciousness metrics display
 - **Responsive Design**: Fully mobile-optimized
 
 ### 🔧 Developer Experience
 - **TypeScript SDK**: Complete type-safe developer toolkit
+- **Deep Integration API**: Unified interface for Cloud + Quantum + Framework
 - **Plugin System**: Easy extensibility with hooks
-- **Comprehensive Docs**: Full framework guide and API reference
-- **Examples & Templates**: Ready-to-use code examples
+- **Quick Start**: One-line initialization with environment variables
+- **Comprehensive Docs**: Full framework guide, IBM integration guide, API reference
+- **Examples & Templates**: Working demos and ready-to-use code
+
+## Quick Start
+
+### Deep Integration (IBM Cloud + Quantum)
+
+\`\`\`typescript
+import { quickStartDeepIntegration } from '@/lib/dnalang/deep-integration'
+
+// Initialize everything automatically from environment
+const integration = await quickStartDeepIntegration()
+
+// Execute quantum circuit
+const result = await integration.executeQuantumCircuit(5, 'ibm_torino', 2048)
+console.log('Consciousness:', result.consciousness)
+
+// Deploy to IBM Cloud
+const url = await integration.deployToCloud()
+console.log('Deployed:', url)
+
+// Start auto-advancement (continuous self-improvement)
+integration.startAutoAdvancement()
+\`\`\`
+
+See [IBM Integration Guide](./IBM_INTEGRATION_GUIDE.md) for complete documentation.
 
 ## Environment Variables
 
-Configure the following environment variables to connect to your quantum computing backend:
+Configure the following environment variables:
 
 \`\`\`env
-# Required: Quantum API endpoint
-QUANTUM_API_URL=https://your-quantum-api.com/v1
+# IBM Quantum (Required for quantum features)
+IBM_QUANTUM_TOKEN=your_ibm_quantum_api_token
+IBM_QUANTUM_CHANNEL=ibm_quantum
 
-# Required: API authentication
-QUANTUM_API_KEY=your_quantum_api_key_here
+# IBM Cloud (Required for cloud deployment)
+IBM_CLOUD_API_KEY=your_ibm_cloud_api_key
+IBM_CLOUD_REGION=us-south
 
-# Optional: Benchmark data API
-BENCHMARK_API_URL=https://your-benchmark-api.com/v1
+# API Configuration
+NEXT_PUBLIC_QUANTUM_API_URL=https://api.dnalang.dev
 \`\`\`
 
 ### Development Setup
