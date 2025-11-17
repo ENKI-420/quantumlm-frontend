@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { AgentMode, AGENT_PERSONAS } from '@/lib/agents/config'
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { message, backend, includeMetrics, conversationHistory } = body
+    const { message, backend, includeMetrics, conversationHistory, agentMode, codeContext } = body
 
     if (!message || typeof message !== 'string') {
       return NextResponse.json(
@@ -72,6 +73,21 @@ Configure the backend to unlock full quantum capabilities!`,
       }
     }
 
+    // Get agent-specific system prompt
+    const currentAgent = (agentMode as AgentMode) || 'quantum'
+    const agentPersona = AGENT_PERSONAS[currentAgent]
+
+    // Construct enhanced message with agent context
+    let enhancedMessage = message
+
+    // For coding agents, include code context if provided
+    if (codeContext && ['architect', 'engineer', 'reviewer', 'debugger'].includes(currentAgent)) {
+      enhancedMessage = `${agentPersona.systemPrompt}\n\n**Code Context:**\n\`\`\`${codeContext.language || 'text'}\n${codeContext.code}\n\`\`\`\n\n**User Request:** ${message}`
+    } else {
+      // For quantum agent, use standard prompt
+      enhancedMessage = `${agentPersona.systemPrompt}\n\n**User:** ${message}`
+    }
+
     // Add timeout to prevent hanging
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 30000) // 30 second timeout
@@ -84,9 +100,15 @@ Configure the backend to unlock full quantum capabilities!`,
           'X-API-Key': apiKey
         },
         body: JSON.stringify({
-          text: message,
+          text: enhancedMessage,
           backend: backend || 'ibm_fez',
-          return_consciousness: includeMetrics !== false
+          return_consciousness: includeMetrics !== false,
+          context: {
+            agent_mode: currentAgent,
+            agent_name: agentPersona.name,
+            capabilities: agentPersona.capabilities,
+            conversation_history: conversationHistory || []
+          }
         }),
         signal: controller.signal
       })
@@ -130,7 +152,12 @@ Please check the backend configuration and try again.`,
           w2: data.consciousness.w2 || 0
         } : null,
         backend_used: data.backend || backend,
-        execution_time: data.usage?.quantum_time || data.execution_time || 0
+        execution_time: data.usage?.quantum_time || data.execution_time || 0,
+        agent_info: {
+          mode: currentAgent,
+          name: agentPersona.name,
+          icon: agentPersona.icon
+        }
       })
     } catch (fetchError) {
       clearTimeout(timeoutId)

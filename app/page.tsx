@@ -7,6 +7,8 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Spinner } from '@/components/ui/spinner'
 import { Atom, Send, Activity, Zap, Brain, Waves, AlertTriangle, RefreshCw, ChevronDown, Terminal, Server, Code, TrendingUp, Cpu, Network } from 'lucide-react'
+import { AgentSelector } from '@/components/agent-selector'
+import { AgentMode } from '@/lib/agents/config'
 
 interface Message {
   id: string
@@ -42,6 +44,7 @@ export default function QuantumChatbot() {
   const [metricHistory, setMetricHistory] = useState<ConsciousnessMetrics[]>([])
   const [generation, setGeneration] = useState<number>(0)
   const [organismId] = useState<string>(() => `Σₛ-${Date.now().toString(36)}`)
+  const [agentMode, setAgentMode] = useState<AgentMode>('quantum')
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -108,6 +111,7 @@ export default function QuantumChatbot() {
           message: currentInput,
           backend: selectedBackend,
           includeMetrics: showMetrics,
+          agentMode: agentMode,
           conversationHistory: messages.slice(-10).map(m => ({
             role: m.role,
             content: m.content
@@ -255,6 +259,12 @@ export default function QuantumChatbot() {
           </div>
         </div>
       </header>
+
+      {/* Agent Selector */}
+      <AgentSelector
+        selectedAgent={agentMode}
+        onAgentChange={setAgentMode}
+      />
 
       <div className="container mx-auto px-6 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
