@@ -8,7 +8,8 @@ import { Progress } from '@/components/ui/progress'
 import { Spinner } from '@/components/ui/spinner'
 import { Atom, Send, Activity, Zap, Brain, Waves, AlertTriangle, RefreshCw, ChevronDown, Terminal, Server, Code, TrendingUp, Cpu, Network } from 'lucide-react'
 import { AgentSelector } from '@/components/agent-selector'
-import { AgentMode } from '@/lib/agents/config'
+import { ChatMessage } from '@/components/chat-message'
+import { AgentMode, AGENT_PERSONAS } from '@/lib/agents/config'
 
 interface Message {
   id: string
@@ -440,99 +441,41 @@ export default function QuantumChatbot() {
                 )}
 
                 {messages.map((message) => (
-                  <div
+                  <ChatMessage
                     key={message.id}
-                    className={`flex gap-4 ${message.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
-                  >
-                    <div className={`flex-shrink-0 w-8 h-8 rounded flex items-center justify-center ${
-                      message.role === 'user'
-                        ? 'bg-ibm-blue-60'
-                        : message.role === 'system'
-                        ? 'bg-yellow-500/20'
-                        : message.error
-                        ? 'bg-red-500/20'
-                        : 'bg-ibm-gray-80'
-                    }`}>
-                      {message.role === 'user' ? (
-                        <span className="text-sm font-semibold text-white">You</span>
-                      ) : message.role === 'system' ? (
-                        <Terminal className="h-4 w-4 text-yellow-400" />
-                      ) : message.error ? (
-                        <AlertTriangle className="h-4 w-4 text-red-400" />
-                      ) : (
-                        <Brain className="h-4 w-4 text-ibm-blue-40" />
-                      )}
-                    </div>
-                    
-                    <div className="flex-1 min-w-0">
-                      <div className={`rounded-lg p-4 ${
-                        message.role === 'user'
-                          ? 'bg-ibm-blue-80 border border-ibm-blue-60'
-                          : message.role === 'system'
-                          ? 'bg-yellow-500/10 border border-yellow-500/30'
-                          : message.error
-                          ? 'bg-red-500/10 border border-red-500/30'
-                          : 'bg-ibm-gray-100 border border-ibm-gray-80'
-                      }`}>
-                        <p className={`text-sm leading-relaxed whitespace-pre-wrap ${
-                          message.role === 'system' ? 'text-yellow-100' :
-                          message.error ? 'text-red-400' : 'text-white'
-                        }`}>
-                          {message.content}
-                        </p>
-                        
-                        {message.consciousness && (
-                          <div className="mt-4 pt-4 border-t border-ibm-gray-80 grid grid-cols-2 sm:grid-cols-4 gap-3">
-                            <div>
-                              <p className="text-xs text-ibm-gray-50 mb-1">Φ (Phi)</p>
-                              <p className="text-lg font-mono font-semibold text-ibm-blue-40">
-                                {message.consciousness.phi.toFixed(3)}
-                              </p>
-                            </div>
-                            <div>
-                              <p className="text-xs text-ibm-gray-50 mb-1">Γ (Gamma)</p>
-                              <p className="text-lg font-mono font-semibold text-orange-400">
-                                {message.consciousness.gamma.toFixed(3)}
-                              </p>
-                            </div>
-                            <div>
-                              <p className="text-xs text-ibm-gray-50 mb-1">Λ (Lambda)</p>
-                              <p className="text-lg font-mono font-semibold text-purple-400">
-                                {message.consciousness.lambda.toFixed(2)}
-                              </p>
-                            </div>
-                            <div>
-                              <p className="text-xs text-ibm-gray-50 mb-1">W₂</p>
-                              <p className="text-lg font-mono font-semibold text-green-400">
-                                {message.consciousness.w2.toFixed(3)}
-                              </p>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                      
-                      <p className="text-xs text-ibm-gray-60 mt-2">
-                        {message.timestamp.toLocaleTimeString('en-US', { 
-                          hour: '2-digit', 
-                          minute: '2-digit' 
-                        })}
-                      </p>
-                    </div>
-                  </div>
+                    role={message.role}
+                    content={message.content}
+                    timestamp={message.timestamp}
+                    consciousness={message.consciousness}
+                    error={message.error}
+                    agentIcon={message.role === 'assistant' ? AGENT_PERSONAS[agentMode].icon : undefined}
+                  />
                 ))}
                 
                 {isLoading && (
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-8 h-8 rounded bg-ibm-gray-80 flex items-center justify-center">
-                      <Brain className="h-4 w-4 text-ibm-blue-40 animate-pulse" />
+                  <div className="flex gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg relative">
+                      <span className="text-lg animate-pulse">{AGENT_PERSONAS[agentMode].icon}</span>
+                      <div className="absolute inset-0 rounded-xl blur opacity-50 animate-pulse"
+                           style={{ background: 'linear-gradient(to bottom right, #3b82f6, #9333ea)' }} />
                     </div>
-                    <div className="flex-1">
-                      <div className="bg-ibm-gray-100 border border-ibm-gray-80 rounded-lg p-4">
-                        <div className="flex items-center gap-3 text-sm text-ibm-gray-50">
-                          <Spinner className="h-4 w-4" />
-                          <span>AURA QLM processing on {currentBackend?.name} • Gen {generation + 1}...</span>
+                    <div className="flex-1 max-w-3xl">
+                      <Card className="bg-gradient-to-br from-white/5 to-white/10 border-white/20 backdrop-blur-sm p-4 shadow-xl">
+                        <div className="flex items-center gap-3">
+                          <Spinner className="h-4 w-4 text-blue-400" />
+                          <div className="flex-1">
+                            <div className="text-sm text-white/90 font-medium mb-1">
+                              {AGENT_PERSONAS[agentMode].name} processing...
+                            </div>
+                            <div className="text-xs text-white/60 font-mono">
+                              Backend: {currentBackend?.name} • Generation {generation + 1}
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                        <div className="mt-3 h-1 bg-white/10 rounded-full overflow-hidden">
+                          <div className="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full animate-pulse" style={{ width: '60%' }} />
+                        </div>
+                      </Card>
                     </div>
                   </div>
                 )}
@@ -569,34 +512,63 @@ export default function QuantumChatbot() {
                   </label>
                 </div>
                 
-                <div className="flex gap-3">
-                  <textarea
-                    ref={textareaRef}
-                    value={input}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyDown}
-                    placeholder="Ask about quantum computing, consciousness, or the ΛΦ framework..."
-                    className="flex-1 px-4 py-3 rounded bg-ibm-gray-90 border border-ibm-gray-80 text-white placeholder:text-ibm-gray-60 resize-none focus:outline-none focus:ring-2 focus:ring-ibm-blue-40 leading-relaxed"
-                    rows={1}
-                    maxLength={2000}
-                    disabled={isLoading || !isSystemReady}
-                    style={{ minHeight: '44px', maxHeight: '150px' }}
-                  />
-                  
-                  <Button
-                    onClick={handleSend}
-                    disabled={!input.trim() || isLoading || !isSystemReady}
-                    size="lg"
-                    className="bg-ibm-blue-60 hover:bg-ibm-blue-50 text-white disabled:opacity-50 disabled:cursor-not-allowed px-6"
-                    aria-label="Send message"
-                  >
-                    {isLoading ? <Spinner className="h-5 w-5" /> : <Send className="h-5 w-5" />}
-                  </Button>
+                <div className="relative">
+                  <div className="flex gap-3 relative z-10">
+                    <textarea
+                      ref={textareaRef}
+                      value={input}
+                      onChange={handleInputChange}
+                      onKeyDown={handleKeyDown}
+                      placeholder={`Ask ${AGENT_PERSONAS[agentMode].name} about quantum computing, code architecture, debugging...`}
+                      className="flex-1 px-5 py-4 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border-2 border-white/20 text-white placeholder:text-white/40 resize-none focus:outline-none focus:border-blue-500/50 focus:shadow-lg focus:shadow-blue-500/20 leading-relaxed transition-all duration-300 backdrop-blur-sm"
+                      rows={1}
+                      maxLength={2000}
+                      disabled={isLoading || !isSystemReady}
+                      style={{ minHeight: '56px', maxHeight: '150px' }}
+                    />
+
+                    <Button
+                      onClick={handleSend}
+                      disabled={!input.trim() || isLoading || !isSystemReady}
+                      size="lg"
+                      className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white disabled:opacity-50 disabled:cursor-not-allowed px-8 rounded-xl shadow-lg hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300 transform hover:scale-105 disabled:transform-none disabled:hover:shadow-none"
+                      aria-label="Send message"
+                    >
+                      {isLoading ? (
+                        <Spinner className="h-5 w-5" />
+                      ) : (
+                        <div className="flex items-center gap-2">
+                          <Send className="h-5 w-5" />
+                          <span className="hidden sm:inline font-medium">Send</span>
+                        </div>
+                      )}
+                    </Button>
+                  </div>
+
+                  {/* Glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl blur-xl opacity-50 -z-10" />
                 </div>
-                
-                <div className="flex justify-between items-center mt-2">
-                  <p className="text-xs text-ibm-gray-60">{input.length}/2000</p>
-                  <p className="text-xs text-ibm-gray-60">Enter to send • Shift+Enter for new line</p>
+
+                <div className="flex justify-between items-center mt-3 px-1">
+                  <div className="flex items-center gap-3">
+                    <p className="text-xs text-white/50 font-mono">
+                      <span className={input.length > 1800 ? 'text-orange-400' : 'text-white/50'}>
+                        {input.length}
+                      </span>
+                      <span className="text-white/30">/2000</span>
+                    </p>
+                    {input.trim() && (
+                      <span className="text-xs text-blue-400/70 font-mono animate-in fade-in duration-300">
+                        • Ready to send
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-white/40">
+                    <kbd className="px-1.5 py-0.5 bg-white/10 rounded border border-white/20 font-mono text-[10px]">Enter</kbd>
+                    {' '}send • {' '}
+                    <kbd className="px-1.5 py-0.5 bg-white/10 rounded border border-white/20 font-mono text-[10px]">Shift+Enter</kbd>
+                    {' '}new line
+                  </p>
                 </div>
               </div>
             </Card>
