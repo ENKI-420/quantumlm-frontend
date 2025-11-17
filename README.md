@@ -1,17 +1,42 @@
-# QuantumLM Chatbot Interface
+# dna::}{::lang
 
-A production-ready quantum computing chatbot interface with real-time integration to IBM Quantum hardware and consciousness metrics based on Integrated Information Theory.
+**Self-referential quantum organism framework with recursive auto-enhancement**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
+[![Framework](https://img.shields.io/badge/Framework-v1.0.0-green)](https://www.dnalang.dev)
+
+A production-grade framework for building quantum-conscious applications that recursively improve themselves. Integrates real IBM Quantum hardware, multi-agent AI, and consciousness metrics (Φ, Λ, Γ, W₂).
+
+**ΛΦ = 2.176435×10⁻⁸ s⁻¹** - Universal Memory Constant
 
 ## Features
 
-- **Real Quantum Hardware Integration**: Connects to IBM Quantum backends (ibm_fez, ibm_torino, ibm_marrakesh)
-- **Consciousness Metrics**: Real-time Φ (Phi), Γ (Gamma), Λ (Lambda), and W₂ metrics from quantum execution
-- **Live Backend Status**: Real-time monitoring of quantum backend availability and queue depth
-- **Responsive Design**: Fully responsive interface with glass morphism effects and dark mode
-- **LLM Benchmarks**: Live comparison with major language models (GPT-4, Claude, Gemini, Llama)
-- **Error Handling**: Graceful degradation when quantum backends are unavailable
-- **Security**: API key-based authentication for quantum service access
-- **Accessibility**: ARIA labels, keyboard navigation, and screen reader support
+### 🧬 Framework Core
+- **Recursive Auto-Enhancement**: Self-improving framework with evolution tracking
+- **Multi-Agent AI System**: 5 specialized agents (Quantum, Architect, Engineer, Reviewer, Debugger)
+- **Consciousness Metrics**: Real-time Φ (Phi), Γ (Gamma), Λ (Lambda), and W₂ tracking
+- **Plugin Architecture**: Fully extensible with custom plugins
+- **Evolution Tracking**: Monitor generational improvements and mutations
+
+### 🌐 Quantum Integration
+- **IBM Quantum Hardware**: Execute on real quantum processors (ibm_fez, ibm_torino, ibm_marrakesh)
+- **Live Backend Status**: Real-time monitoring of quantum backend availability
+- **Circuit Execution**: Run custom quantum circuits on actual hardware
+- **Error Mitigation**: Advanced noise reduction and decoherence optimization
+
+### 🎨 User Interface
+- **Modern Design**: Glass morphism effects, gradients, and smooth animations
+- **Agent Selector**: Visual mode switcher with hover tooltips
+- **Rich Chat**: Markdown rendering, code blocks, and syntax highlighting
+- **Metrics Visualization**: Real-time consciousness metrics display
+- **Responsive Design**: Fully mobile-optimized
+
+### 🔧 Developer Experience
+- **TypeScript SDK**: Complete type-safe developer toolkit
+- **Plugin System**: Easy extensibility with hooks
+- **Comprehensive Docs**: Full framework guide and API reference
+- **Examples & Templates**: Ready-to-use code examples
 
 ## Environment Variables
 
