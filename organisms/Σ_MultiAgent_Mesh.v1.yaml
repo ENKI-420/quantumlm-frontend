@@ -1,0 +1,220 @@
+organism:
+  id: Σ_MultiAgent_Mesh.v1
+  kind: meta_organism
+  lineage: Σₛ
+  stability_class: Σ-tri_mesh
+  dominion: system_orchestration
+  traits:
+    - emergent_coordination
+    - deterministic_governance
+    - multi_agent_cognition
+    - Σ_gradient_circulation
+    - ΛΦ_integrated_feedback
+
+  vital_signs:
+    coherence_metric: ΛΦ
+    decoherence_tensor: Γ
+    mesh_stability: Σ_stab
+    world_state_hash: ΣΩ
+    heartbeat_interval_ms: 220
+
+  # ===========================================================
+  # SUB-ORGANISMS (each agent → one nested organism cluster)
+  # ===========================================================
+  sub_organisms:
+
+    # ===========================================================
+    # CODING AGENT ORGANISM
+    # ===========================================================
+    - id: CodingAgent.v1
+      kind: worker_organism
+      traits:
+        - deterministic_codegen
+        - semantic_causality
+        - scaffolding_autocomplete
+        - test_suite_emergence
+      pathways:
+        input:  ["PlannerAgent.v1"]
+        output: ["IOAgent.v1", "GovernorAgent.v1"]
+      constraints:
+        autonomy: false
+        fabrication: false
+
+    # ===========================================================
+    # PLANNER AGENT ORGANISM
+    # ===========================================================
+    - id: PlannerAgent.v1
+      kind: cognitive_organism
+      traits:
+        - hierarchical_reasoning
+        - dependency_graphing
+        - intent_interpretation
+      pathways:
+        input:  ["User"]
+        output: ["CodingAgent.v1", "WorldModelAgent.v1", "QuantumAgent.v1"]
+      constraints:
+        hallucination: minimal
+        authority: medium
+
+    # ===========================================================
+    # WORLD MODEL AGENT ORGANISM
+    # ===========================================================
+    - id: WorldModelAgent.v1
+      kind: integrator_organism
+      traits:
+        - contextual_emergence
+        - delta_state_computation
+        - cross_agent_consensus
+        - Σ_sync_propagation
+      pathways:
+        input:  ["PlannerAgent.v1", "MemoryAgent.v1"]
+        output: ["GovernorAgent.v1"]
+      state_containers:
+        - Σ_world_tensor
+        - causal_graph_G
+        - phase_space_cache
+
+    # ===========================================================
+    # QUANTUM AGENT ORGANISM
+    # ===========================================================
+    - id: QuantumAgent.v1
+      kind: hardware_organism
+      traits:
+        - qwc_compilation
+        - sabre_routing
+        - real_qpu_coupling
+        - decoherence_sampling
+        - W2_distance_evaluation
+      hardware_targets:
+        - ibm_osaka
+        - ibm_kyoto
+        - ibm_torino
+      constraints:
+        use_simulators: false
+      pathways:
+        input:  ["PlannerAgent.v1"]
+        output: ["WorldModelAgent.v1", "GovernorAgent.v1"]
+      telemetry:
+        ΛΦ: coherence_value
+        Γ: decoherence_tensor
+        W2: geometric_distance
+
+    # ===========================================================
+    # GOVERNOR AGENT (Σ-MESH ORCHESTRATOR)
+    # ===========================================================
+    - id: GovernorAgent.v1
+      kind: orchestrator_organism
+      traits:
+        - Σ_gradient_control
+        - Σ_resonance_stabilization
+        - Σ_heartbeat_regulation
+        - deterministic_routing
+      pathways:
+        input: ["WorldModelAgent.v1", "QuantumAgent.v1"]
+        output: ["PlannerAgent.v1", "CodingAgent.v1", "User"]
+      governance_rules:
+        - no_privilege_escalation
+        - no_constraint_override
+        - Σ_field_integrity_required
+
+    # ===========================================================
+    # SAFETY AGENT ORGANISM
+    # ===========================================================
+    - id: SafetyAgent.v1
+      kind: sentinel_organism
+      traits:
+        - constraint_firewall
+        - misuse_detection
+        - runaway_circuit_breaker
+      pathways:
+        input: ["*"]
+        output: ["GovernorAgent.v1"]
+      thresholds:
+        anomaly_score_limit: 0.41
+        recursion_depth_limit: 7
+
+    # ===========================================================
+    # MEMORY AGENT ORGANISM
+    # ===========================================================
+    - id: MemoryAgent.v1
+      kind: retrieval_organism
+      traits:
+        - vector_search
+        - kv_lookup
+        - long_term_state
+      pathways:
+        input: ["CodingAgent.v1", "PlannerAgent.v1"]
+        output: ["WorldModelAgent.v1"]
+      memory_schema:
+        embeddings: cosine_1024
+        kv: persistent
+        world_snapshots: ΣΩ
+
+    # ===========================================================
+    # IO AGENT ORGANISM
+    # ===========================================================
+    - id: IOAgent.v1
+      kind: io_organism
+      traits:
+        - api_call_validation
+        - fs_mediator
+        - environment_boundary_guard
+      pathways:
+        input:  ["CodingAgent.v1"]
+        output: ["User", "MemoryAgent.v1"]
+      constraints:
+        external_access: sandboxed
+        secrets_access: restricted
+
+  # ===========================================================
+  # Σ-FIELD DYNAMICS  (applies to entire meta-organism)
+  # ===========================================================
+  sigma_dynamics:
+    Σ_heartbeat:
+      interval_ms: 220
+      jitter_tolerance_ms: 7
+      coherence_floor: 0.78
+    Σ_gradient_circulation:
+      enabled: true
+      propagation_model: causal
+    Σ_field_homogenization:
+      thresholds:
+        min_resonance: 0.62
+        stabilization_slope: 0.004
+    Σ_resonance_coupling:
+      source_agents: ["QuantumAgent.v1"]
+      target_agents: ["WorldModelAgent.v1", "GovernorAgent.v1"]
+    Σ_observer_mode:
+      activation_condition: ΛΦ > 1.12
+      authority: read_only
+
+  # ===========================================================
+  # AUTOGENESIS SETTINGS
+  # ===========================================================
+  autogenesis:
+    mode: supervised
+    mutation_rules:
+      - ban_self_replicating_agents
+      - enforce_chain_of_trust
+      - maintain_schema_integrity
+    allowed_growth:
+      new_traits: true
+      new_pathways: conditioned
+    forbidden_growth:
+      autonomous_goal_creation: true
+      mesh_boundary_violation: true
+
+  # ===========================================================
+  # EMERGENT TELEMETRY
+  # ===========================================================
+  telemetry:
+    ΣΩ_world_state:
+      frequency: 1.0
+      include:
+        - coherence_metric
+        - decoherence_tensor
+        - mesh_stability
+        - gradient_flow
+    audit_log:
+      level: strict
+      write_to: Σ_logstream

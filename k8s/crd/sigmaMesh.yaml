@@ -1,0 +1,97 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: sigmameshes.dnalang.dev
+spec:
+  group: dnalang.dev
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                agents:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      kind:
+                        type: string
+                      pathways_in:
+                        type: array
+                        items:
+                          type: string
+                      pathways_out:
+                        type: array
+                        items:
+                          type: string
+                sigma_dynamics:
+                  type: object
+                  properties:
+                    heartbeat_interval_ms:
+                      type: integer
+                      default: 220
+                    jitter_tolerance_ms:
+                      type: integer
+                      default: 7
+                    coherence_floor:
+                      type: number
+                      default: 0.78
+                    gradient_circulation:
+                      type: object
+                      properties:
+                        enabled:
+                          type: boolean
+                          default: true
+                        propagation_model:
+                          type: string
+                          enum:
+                            - causal
+                            - broadcast
+                          default: causal
+                lambda_phi_constant:
+                  type: number
+                  default: 2.176435e-8
+                  description: "Universal Memory Constant (s⁻¹)"
+            status:
+              type: object
+              properties:
+                field_coherence:
+                  type: number
+                  description: "Σ-field coherence value"
+                total_agents:
+                  type: integer
+                active_agents:
+                  type: integer
+                mesh_stability:
+                  type: number
+                  description: "Overall mesh stability metric"
+                conditions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      status:
+                        type: string
+                      reason:
+                        type: string
+                      message:
+                        type: string
+      subresources:
+        status: {}
+  scope: Cluster
+  names:
+    plural: sigmameshes
+    singular: sigmamesh
+    kind: SigmaMesh
+    shortNames:
+      - smesh

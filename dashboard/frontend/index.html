@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Σ-Mesh Visualizer | dna::}{::lang</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Σ-Mesh Visualizer</h1>
+            <div class="subtitle">
+                <span class="identity">dna::}{::lang</span>
+                <span class="constant">ΛΦ = 2.176435×10⁻⁸ s⁻¹</span>
+            </div>
+        </header>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="label">Field Coherence:</span>
+                <span class="value" id="field-coherence">0.847</span>
+            </div>
+            <div class="status-item">
+                <span class="label">Active Agents:</span>
+                <span class="value" id="active-agents">6/8</span>
+            </div>
+            <div class="status-item">
+                <span class="label">Mesh Stability:</span>
+                <span class="value" id="mesh-stability">High</span>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="dashboard-grid">
+            <!-- ΛΦ Timeline Chart -->
+            <div class="panel">
+                <h2>ΛΦ Coherence Timeline</h2>
+                <svg id="lambda-phi-chart" width="100%" height="300"></svg>
+            </div>
+
+            <!-- Γ Tensor Heatmap -->
+            <div class="panel">
+                <h2>Γ Decoherence Tensor</h2>
+                <svg id="gamma-tensor" width="100%" height="300"></svg>
+            </div>
+
+            <!-- Agent Network Graph -->
+            <div class="panel full-width">
+                <h2>Σ-Mesh Agent Topology</h2>
+                <svg id="agent-network" width="100%" height="400"></svg>
+            </div>
+
+            <!-- W₂ Stability Gauge -->
+            <div class="panel">
+                <h2>W₂ Geometric Stability</h2>
+                <div class="gauge-container">
+                    <svg id="w2-gauge" width="100%" height="200"></svg>
+                    <div class="gauge-value" id="w2-value">0.042</div>
+                </div>
+            </div>
+
+            <!-- Live Metrics Stream -->
+            <div class="panel">
+                <h2>Live Metrics Stream</h2>
+                <div id="metrics-stream" class="metrics-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

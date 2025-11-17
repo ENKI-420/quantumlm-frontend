@@ -1,0 +1,85 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: organisms.dnalang.dev
+spec:
+  group: dnalang.dev
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: "Organism identifier"
+                kind:
+                  type: string
+                  description: "Organism kind (worker_organism, cognitive_organism, etc.)"
+                traits:
+                  type: array
+                  items:
+                    type: string
+                  description: "Organism behavioral traits"
+                pathways:
+                  type: object
+                  properties:
+                    input:
+                      type: array
+                      items:
+                        type: string
+                    output:
+                      type: array
+                      items:
+                        type: string
+                constraints:
+                  type: object
+                  additionalProperties: true
+                lambda_phi:
+                  type: number
+                  description: "ΛΦ coherence metric"
+                  default: 2.176435e-8
+            status:
+              type: object
+              properties:
+                phase:
+                  type: string
+                  enum:
+                    - Initializing
+                    - Active
+                    - Evolving
+                    - Dormant
+                    - Failed
+                coherence:
+                  type: number
+                  description: "Current coherence value"
+                last_heartbeat:
+                  type: string
+                  format: date-time
+                conditions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      status:
+                        type: string
+                      reason:
+                        type: string
+                      message:
+                        type: string
+      subresources:
+        status: {}
+  scope: Namespaced
+  names:
+    plural: organisms
+    singular: organism
+    kind: Organism
+    shortNames:
+      - org
