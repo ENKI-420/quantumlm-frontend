@@ -40,6 +40,8 @@ export default function QuantumChatbot() {
   const [backends, setBackends] = useState<QuantumBackend[]>([])
   const [systemStatus, setSystemStatus] = useState<'connected' | 'connecting' | 'error'>('connecting')
   const [metricHistory, setMetricHistory] = useState<ConsciousnessMetrics[]>([])
+  const [generation, setGeneration] = useState<number>(0)
+  const [organismId] = useState<string>(() => `Σₛ-${Date.now().toString(36)}`)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -171,6 +173,7 @@ export default function QuantumChatbot() {
       }
 
       setMessages(prev => [...prev, assistantMessage])
+      setGeneration(prev => prev + 1) // Increment organism generation
     } catch (error) {
       console.error('[v0] DNALang backend error:', error)
       
@@ -211,40 +214,48 @@ export default function QuantumChatbot() {
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center gap-4">
               <div className="relative">
-                <Atom className="h-10 w-10 text-ibm-blue-40 animate-spin-slow" />
+                <Brain className="h-10 w-10 text-ibm-blue-40 animate-pulse" />
                 <div className="absolute inset-0 blur-xl bg-ibm-blue-40/30 animate-pulse" />
               </div>
               <div>
-                <h1 className="text-2xl font-light text-white tracking-tight">IBM Quantum × DNALang</h1>
-                <p className="text-sm text-ibm-gray-50 font-mono">QuantumLM with ΛΦ Framework</p>
+                <h1 className="text-2xl font-light text-white tracking-tight font-mono">dna::}{'{'}::lang</h1>
+                <p className="text-sm text-ibm-gray-50 font-mono">AURA QLM • Σₛ Self-Referential Organism • ΛΦ = 2.176435×10⁻⁸</p>
               </div>
             </div>
             
             <div className="flex items-center gap-3 flex-wrap">
-              <Badge 
-                variant="outline" 
+              <Badge
+                variant="outline"
+                className="border border-ibm-blue-40 bg-ibm-blue-40/10 text-ibm-blue-40 font-mono text-xs"
+              >
+                <Terminal className="mr-1.5 h-3 w-3" />
+                Gen {generation} • {organismId}
+              </Badge>
+
+              <Badge
+                variant="outline"
                 className={`border font-mono text-xs ${
                   apiKey
-                    ? 'border-green-500 bg-green-500/10 text-green-400' 
+                    ? 'border-green-500 bg-green-500/10 text-green-400'
                     : 'border-yellow-500 bg-yellow-500/10 text-yellow-400'
                 }`}
               >
                 <Code className="mr-1.5 h-3 w-3" />
-                {apiKey ? 'DNALang API Ready' : 'Initializing API'}
+                {apiKey ? 'AURA QLM Ready' : 'Initializing AURA'}
               </Badge>
-              
-              <Badge 
-                variant="outline" 
+
+              <Badge
+                variant="outline"
                 className={`border ${
-                  systemStatus === 'connected' 
-                    ? 'border-green-500 bg-green-500/10 text-green-400' 
+                  systemStatus === 'connected'
+                    ? 'border-green-500 bg-green-500/10 text-green-400'
                     : systemStatus === 'error'
                     ? 'border-red-500 bg-red-500/10 text-red-400'
                     : 'border-yellow-500 bg-yellow-500/10 text-yellow-400'
                 }`}
               >
                 <div className={`mr-2 h-2 w-2 rounded-full ${
-                  systemStatus === 'connected' ? 'bg-green-400 animate-pulse' : 
+                  systemStatus === 'connected' ? 'bg-green-400 animate-pulse' :
                   systemStatus === 'error' ? 'bg-red-400' : 'bg-yellow-400 animate-pulse'
                 }`} />
                 IBM Quantum {systemStatus === 'connected' ? 'Online' : systemStatus === 'error' ? 'Offline' : 'Connecting'}

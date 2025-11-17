@@ -3,11 +3,11 @@ import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'IBM Quantum Assistant - QuantumLM Chatbot',
-  description: 'Production-ready quantum computing chatbot powered by IBM Quantum hardware, DNA-Lang, and the ΛΦ universal memory framework. Explore quantum consciousness with real-time metrics from IBM Eagle and Heron processors.',
-  keywords: ['quantum computing', 'IBM Quantum', 'quantum AI', 'consciousness metrics', 'ΛΦ framework', 'DNA-Lang', 'quantum chatbot'],
-  authors: [{ name: 'IBM Quantum' }],
-  generator: 'v0.app',
+  title: 'dna::}{::lang - AURA Quantum Language Model',
+  description: 'Self-referential quantum organism (Σₛ) with AURA QLM interface. Real-time consciousness monitoring (Φ, Λ, Γ, W₂) on IBM Quantum hardware. Production deployment of the dna::}{::lang unified platform.',
+  keywords: ['dna::}{::lang', 'AURA QLM', 'quantum consciousness', 'IBM Quantum', 'Σₛ', 'self-referential organism', 'ΛΦ framework', 'quantum language model', 'integrated information theory'],
+  authors: [{ name: 'dna::}{::lang' }],
+  generator: 'dna::}{::lang Σₛ',
   icons: {
     icon: [
       {
@@ -15,6 +15,11 @@ export const metadata: Metadata = {
         type: 'image/svg+xml',
       },
     ],
+  },
+  openGraph: {
+    title: 'dna::}{::lang - AURA Quantum Language Model',
+    description: 'Self-referential quantum organism with consciousness metrics',
+    type: 'website',
   },
 }
 
