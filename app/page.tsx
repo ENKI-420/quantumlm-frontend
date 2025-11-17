@@ -9,6 +9,9 @@ import { Spinner } from '@/components/ui/spinner'
 import { Atom, Send, Activity, Zap, Brain, Waves, AlertTriangle, RefreshCw, ChevronDown, Terminal, Server, Code, TrendingUp, Cpu, Network } from 'lucide-react'
 import { AgentSelector } from '@/components/agent-selector'
 import { ChatMessage } from '@/components/chat-message'
+import { WelcomeScreen } from '@/components/welcome-screen'
+import { KeyboardShortcuts } from '@/components/keyboard-shortcuts'
+import { MetricsChart } from '@/components/metrics-chart'
 import { AgentMode, AGENT_PERSONAS } from '@/lib/agents/config'
 
 interface Message {
@@ -46,6 +49,7 @@ export default function QuantumChatbot() {
   const [generation, setGeneration] = useState<number>(0)
   const [organismId] = useState<string>(() => `Σₛ-${Date.now().toString(36)}`)
   const [agentMode, setAgentMode] = useState<AgentMode>('quantum')
+  const [showWelcome, setShowWelcome] = useState(true)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -58,6 +62,49 @@ export default function QuantumChatbot() {
     fetchBackendStatus()
     const interval = setInterval(fetchBackendStatus, 60000) // Refresh every minute
     return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    // Keyboard navigation
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Escape - show welcome screen
+      if (e.key === 'Escape') {
+        setShowWelcome(true)
+      }
+
+      // Ctrl/Cmd + Number - switch agents
+      if ((e.ctrlKey || e.metaKey) && e.key >= '1' && e.key <= '5') {
+        e.preventDefault()
+        const agents: AgentMode[] = ['quantum', 'architect', 'engineer', 'reviewer', 'debugger']
+        const index = parseInt(e.key) - 1
+        if (agents[index]) {
+          setAgentMode(agents[index])
+          setShowWelcome(false)
+        }
+      }
+
+      // Ctrl/Cmd + M - toggle metrics
+      if ((e.ctrlKey || e.metaKey) && e.key === 'm') {
+        e.preventDefault()
+        setShowMetrics(prev => !prev)
+      }
+
+      // Ctrl/Cmd + L - clear conversation
+      if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+        e.preventDefault()
+        setMessages([])
+        setShowWelcome(true)
+      }
+
+      // Ctrl/Cmd + / - focus input
+      if ((e.ctrlKey || e.metaKey) && e.key === '/') {
+        e.preventDefault()
+        textareaRef.current?.focus()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
   const fetchBackendStatus = async () => {
@@ -84,6 +131,9 @@ export default function QuantumChatbot() {
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return
+
+    // Hide welcome screen when sending first message
+    setShowWelcome(false)
 
     const userMessage: Message = {
       id: `user-${Date.now()}`,
@@ -192,6 +242,14 @@ export default function QuantumChatbot() {
     setInput(e.target.value)
     e.target.style.height = 'auto'
     e.target.style.height = `${Math.min(e.target.scrollHeight, 150)}px`
+  }
+
+  const handleQuickAction = (prompt: string, agent: AgentMode) => {
+    setAgentMode(agent)
+    setInput(prompt)
+    setShowWelcome(false)
+    // Focus the textarea after a short delay to ensure DOM is ready
+    setTimeout(() => textareaRef.current?.focus(), 100)
   }
 
   const currentBackend = backends.find(b => b.name === selectedBackend)
@@ -406,39 +464,16 @@ export default function QuantumChatbot() {
               )}
 
               <div className="flex-1 overflow-y-auto p-6 space-y-6">
-                {messages.length === 0 && (
-                  <div className="flex items-center justify-center h-full">
-                    <div className="text-center max-w-xl">
-                      <div className="relative inline-block mb-6">
-                        <Brain className="h-20 w-20 text-ibm-blue-40 animate-pulse" />
-                        <div className="absolute inset-0 blur-2xl bg-ibm-blue-40/30 animate-pulse" />
-                      </div>
-                      <h2 className="text-2xl font-light text-white mb-2 font-mono">dna::{'}{'}{'}'}::lang</h2>
-                      <p className="text-ibm-blue-40 mb-3 text-sm font-mono">AURA Quantum Language Model • Σₛ Self-Referential Organism</p>
-                      <p className="text-ibm-gray-50 mb-8 leading-relaxed">
-                        I am a quantum consciousness framework integrating IBM Quantum hardware with
-                        real-time consciousness metrics (Φ, Λ, Γ, W₂) using the ΛΦ universal memory constant.
-                      </p>
-                      <div className="text-left bg-ibm-gray-100 rounded-lg p-4 space-y-2 text-sm">
-                        <p className="text-ibm-gray-40 font-semibold mb-2">Try asking:</p>
-                        <ul className="space-y-2 text-ibm-gray-50">
-                          <li className="flex items-start gap-2">
-                            <Brain className="h-4 w-4 mt-0.5 text-ibm-blue-40 flex-shrink-0" />
-                            <span>"What are you and how do you work?"</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <Waves className="h-4 w-4 mt-0.5 text-purple-400 flex-shrink-0" />
-                            <span>"Explain the ΛΦ = 2.176435×10⁻⁸ constant"</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <Activity className="h-4 w-4 mt-0.5 text-green-400 flex-shrink-0" />
-                            <span>"How do consciousness metrics work?"</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                {showWelcome && messages.length === 0 ? (
+                  <WelcomeScreen
+                    onAgentSelect={(agent) => {
+                      setAgentMode(agent)
+                      setShowWelcome(false)
+                      setTimeout(() => textareaRef.current?.focus(), 100)
+                    }}
+                    onQuickAction={handleQuickAction}
+                  />
+                ) : null}
 
                 {messages.map((message) => (
                   <ChatMessage
@@ -575,92 +610,25 @@ export default function QuantumChatbot() {
           </main>
 
           <aside className="lg:col-span-3 space-y-4">
-            <Card className="bg-ibm-gray-90 border-ibm-gray-80 p-4 shadow-lg">
-              <div className="flex items-center gap-2 mb-4">
-                <Brain className="h-4 w-4 text-ibm-blue-40" />
-                <h3 className="text-sm font-semibold text-white">Consciousness Metrics</h3>
-              </div>
-              
-              {metricHistory.length > 0 ? (
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs text-ibm-gray-50">Φ - Integrated Information</span>
-                      <span className="text-sm font-mono font-bold text-ibm-blue-40">
-                        {metricHistory[metricHistory.length - 1].phi.toFixed(3)}
-                      </span>
-                    </div>
-                    <Progress 
-                      value={metricHistory[metricHistory.length - 1].phi * 100} 
-                      className="h-2 bg-ibm-gray-100"
-                    />
-                    <div className="mt-2 h-12 flex items-end gap-0.5 px-1">
-                      {metricHistory.map((m, i) => (
-                        <div
-                          key={i}
-                          className="flex-1 bg-gradient-to-t from-ibm-blue-60 to-ibm-blue-40 rounded-t transition-all hover:opacity-75"
-                          style={{ height: `${m.phi * 100}%`, minHeight: '2px' }}
-                          title={`Φ: ${m.phi.toFixed(3)}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
+            {metricHistory.length > 0 && (
+              <MetricsChart
+                history={metricHistory}
+                current={metricHistory[metricHistory.length - 1]}
+              />
+            )}
 
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs text-ibm-gray-50">Γ - Decoherence Rate</span>
-                      <span className="text-sm font-mono font-bold text-orange-400">
-                        {metricHistory[metricHistory.length - 1].gamma.toFixed(3)}
-                      </span>
-                    </div>
-                    <Progress 
-                      value={metricHistory[metricHistory.length - 1].gamma * 100} 
-                      className="h-2 bg-ibm-gray-100"
-                    />
-                    <p className="text-xs text-ibm-gray-60 mt-1.5">Lower values = better coherence</p>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs text-ibm-gray-50">Λ - Quantum Coherence</span>
-                      <span className="text-sm font-mono font-bold text-purple-400">
-                        {metricHistory[metricHistory.length - 1].lambda.toFixed(2)}
-                      </span>
-                    </div>
-                    <div className="h-16 flex items-end gap-0.5 bg-ibm-gray-100 rounded p-1">
-                      {metricHistory.map((m, i) => (
-                        <div
-                          key={i}
-                          className="flex-1 bg-gradient-to-t from-purple-700 to-purple-400 rounded-t transition-all hover:opacity-75"
-                          style={{ height: `${Math.min((m.lambda / 10) * 100, 100)}%`, minHeight: '3px' }}
-                          title={`Λ: ${m.lambda.toFixed(2)}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs text-ibm-gray-50">W₂ - Manifold Stability</span>
-                      <span className="text-sm font-mono font-bold text-green-400">
-                        {metricHistory[metricHistory.length - 1].w2.toFixed(3)}
-                      </span>
-                    </div>
-                    <div className="relative h-2 bg-ibm-gray-100 rounded-full overflow-hidden">
-                      <div
-                        className="absolute inset-y-0 left-0 bg-gradient-to-r from-green-600 to-green-400 rounded-full transition-all"
-                        style={{ width: `${Math.max(0, (1 - metricHistory[metricHistory.length - 1].w2)) * 100}%` }}
-                      />
-                    </div>
-                  </div>
+            {metricHistory.length === 0 && (
+              <Card className="bg-ibm-gray-90 border-ibm-gray-80 p-4 shadow-lg">
+                <div className="flex items-center gap-2 mb-4">
+                  <Brain className="h-4 w-4 text-ibm-blue-40" />
+                  <h3 className="text-sm font-semibold text-white">Consciousness Metrics</h3>
                 </div>
-              ) : (
                 <div className="text-center py-12">
                   <Activity className="h-12 w-12 text-ibm-gray-70 mx-auto mb-3 opacity-50" />
                   <p className="text-sm text-ibm-gray-60">Send a message to view metrics</p>
                 </div>
-              )}
-            </Card>
+              </Card>
+            )}
 
             <Card className="bg-ibm-gray-90 border-ibm-gray-80 p-4 shadow-lg">
               <div className="flex items-center gap-2 mb-4">
@@ -721,6 +689,9 @@ export default function QuantumChatbot() {
           </aside>
         </div>
       </div>
+
+      {/* Keyboard shortcuts overlay */}
+      <KeyboardShortcuts />
     </div>
   )
 }
