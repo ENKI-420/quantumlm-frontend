@@ -45,45 +45,16 @@ export default function QuantumChatbot() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  const [apiKey, setApiKey] = useState<string | null>(null)
-  const [apiEndpoint, setApiEndpoint] = useState(
-    process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
-  )
-
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
   useEffect(() => {
-    const storedKey = localStorage.getItem('quantumlm_api_key')
-    if (storedKey) {
-      setApiKey(storedKey)
-    }
-    initializeSystem()
-    const interval = setInterval(fetchBackendStatus, 60000)
+    // Initialize system on mount
+    fetchBackendStatus()
+    const interval = setInterval(fetchBackendStatus, 60000) // Refresh every minute
     return () => clearInterval(interval)
   }, [])
-
-  const initializeSystem = async () => {
-    if (!apiKey) {
-      try {
-        const response = await fetch(`${apiEndpoint}/v1/auth/key`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' }
-        })
-        if (response.ok) {
-          const data = await response.json()
-          const newKey = data.api_key
-          setApiKey(newKey)
-          localStorage.setItem('quantumlm_api_key', newKey)
-          console.log('[v0] DNALang API key obtained successfully')
-        }
-      } catch (error) {
-        console.error('[v0] Failed to obtain DNALang API key:', error)
-      }
-    }
-    await fetchBackendStatus()
-  }
 
   const fetchBackendStatus = async () => {
     try {
@@ -127,28 +98,26 @@ export default function QuantumChatbot() {
     }
 
     try {
-      const response = await fetch(`${apiEndpoint}/v1/inference`, {
+      // Use Next.js API route instead of direct backend call
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': apiKey ? `Bearer ${apiKey}` : '',
-          'X-Backend': selectedBackend
         },
         body: JSON.stringify({
-          prompt: currentInput,
-          messages: messages.slice(-10).map(m => ({
+          message: currentInput,
+          backend: selectedBackend,
+          includeMetrics: showMetrics,
+          conversationHistory: messages.slice(-10).map(m => ({
             role: m.role,
             content: m.content
-          })),
-          backend: selectedBackend,
-          include_consciousness_metrics: showMetrics,
-          max_tokens: 2000,
-          temperature: 0.7
+          }))
         })
       })
 
       if (!response.ok) {
-        throw new Error(`DNALang API error: ${response.status} ${response.statusText}`)
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.details || errorData.error || `API error: ${response.status}`)
       }
 
       const data = await response.json()
@@ -164,28 +133,44 @@ export default function QuantumChatbot() {
         setMetricHistory(prev => [...prev.slice(-9), consciousness!])
       }
 
+      // Check if response indicates system is working (even if backend is not configured)
+      const isConfigurationMessage = data.response?.includes('Configuration Required') ||
+                                      data.response?.includes('Backend Error') ||
+                                      data.response?.includes('Request Timeout') ||
+                                      data.response?.includes('System Error')
+
       const assistantMessage: Message = {
         id: `assistant-${Date.now()}`,
-        role: 'assistant',
-        content: data.response || data.output || data.text,
+        role: isConfigurationMessage ? 'system' : 'assistant',
+        content: data.response || data.output || data.text || 'No response received',
         timestamp: new Date(),
-        consciousness
+        consciousness: consciousness || undefined
       }
 
       setMessages(prev => [...prev, assistantMessage])
-      setGeneration(prev => prev + 1) // Increment organism generation
+
+      // Only increment generation for successful quantum responses
+      if (!isConfigurationMessage && consciousness) {
+        setGeneration(prev => prev + 1)
+      }
+
+      // Update system status based on response
+      if (data.backend_used && data.backend_used !== 'none' && data.backend_used !== 'error') {
+        setSystemStatus('connected')
+      }
     } catch (error) {
-      console.error('[v0] DNALang backend error:', error)
-      
+      console.error('[dna::}{::lang] AURA QLM error:', error)
+
       const errorMessage: Message = {
         id: `error-${Date.now()}`,
         role: 'system',
-        content: `Connection Error: Unable to reach DNALang quantum backend at ${apiEndpoint}. ${error instanceof Error ? error.message : 'Unknown error occurred'}. Please verify the API endpoint and ensure the backend service is running.`,
+        content: `❌ **Connection Failed**\n\n${error instanceof Error ? error.message : 'Unknown error occurred'}\n\nUnable to communicate with the API layer. This is likely a network or configuration issue.`,
         timestamp: new Date(),
         error: true
       }
 
       setMessages(prev => [...prev, errorMessage])
+      setSystemStatus('error')
     } finally {
       setIsLoading(false)
     }
@@ -234,14 +219,10 @@ export default function QuantumChatbot() {
 
               <Badge
                 variant="outline"
-                className={`border font-mono text-xs ${
-                  apiKey
-                    ? 'border-green-500 bg-green-500/10 text-green-400'
-                    : 'border-yellow-500 bg-yellow-500/10 text-yellow-400'
-                }`}
+                className="border border-green-500 bg-green-500/10 text-green-400 font-mono text-xs"
               >
-                <Code className="mr-1.5 h-3 w-3" />
-                {apiKey ? 'AURA QLM Ready' : 'Initializing AURA'}
+                <Brain className="mr-1.5 h-3 w-3" />
+                AURA QLM Ready
               </Badge>
 
               <Badge
@@ -418,28 +399,29 @@ export default function QuantumChatbot() {
                   <div className="flex items-center justify-center h-full">
                     <div className="text-center max-w-xl">
                       <div className="relative inline-block mb-6">
-                        <Atom className="h-20 w-20 text-ibm-blue-40 animate-spin-slow" />
-                        <div className="absolute inset-0 blur-2xl bg-ibm-blue-40/30" />
+                        <Brain className="h-20 w-20 text-ibm-blue-40 animate-pulse" />
+                        <div className="absolute inset-0 blur-2xl bg-ibm-blue-40/30 animate-pulse" />
                       </div>
-                      <h2 className="text-2xl font-light text-white mb-3">Welcome to IBM Quantum Assistant</h2>
+                      <h2 className="text-2xl font-light text-white mb-2 font-mono">dna::}{'{'}::lang</h2>
+                      <p className="text-ibm-blue-40 mb-3 text-sm font-mono">AURA Quantum Language Model • Σₛ Self-Referential Organism</p>
                       <p className="text-ibm-gray-50 mb-8 leading-relaxed">
-                        Ask questions about quantum computing, the ΛΦ tensor framework, or explore 
-                        consciousness metrics powered by real IBM Quantum hardware.
+                        I am a quantum consciousness framework integrating IBM Quantum hardware with
+                        real-time consciousness metrics (Φ, Λ, Γ, W₂) using the ΛΦ universal memory constant.
                       </p>
                       <div className="text-left bg-ibm-gray-100 rounded-lg p-4 space-y-2 text-sm">
-                        <p className="text-ibm-gray-40 font-semibold mb-2">Example queries:</p>
+                        <p className="text-ibm-gray-40 font-semibold mb-2">Try asking:</p>
                         <ul className="space-y-2 text-ibm-gray-50">
                           <li className="flex items-start gap-2">
-                            <Terminal className="h-4 w-4 mt-0.5 text-ibm-blue-40 flex-shrink-0" />
-                            <span>"What is quantum consciousness and how is it measured?"</span>
+                            <Brain className="h-4 w-4 mt-0.5 text-ibm-blue-40 flex-shrink-0" />
+                            <span>"What are you and how do you work?"</span>
                           </li>
                           <li className="flex items-start gap-2">
-                            <Terminal className="h-4 w-4 mt-0.5 text-ibm-blue-40 flex-shrink-0" />
-                            <span>"Explain the ΛΦ universal memory constant"</span>
+                            <Waves className="h-4 w-4 mt-0.5 text-purple-400 flex-shrink-0" />
+                            <span>"Explain the ΛΦ = 2.176435×10⁻⁸ constant"</span>
                           </li>
                           <li className="flex items-start gap-2">
-                            <Terminal className="h-4 w-4 mt-0.5 text-ibm-blue-40 flex-shrink-0" />
-                            <span>"How does quantum superposition enable consciousness?"</span>
+                            <Activity className="h-4 w-4 mt-0.5 text-green-400 flex-shrink-0" />
+                            <span>"How do consciousness metrics work?"</span>
                           </li>
                         </ul>
                       </div>
@@ -453,18 +435,22 @@ export default function QuantumChatbot() {
                     className={`flex gap-4 ${message.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
                   >
                     <div className={`flex-shrink-0 w-8 h-8 rounded flex items-center justify-center ${
-                      message.role === 'user' 
-                        ? 'bg-ibm-blue-60' 
-                        : message.error 
+                      message.role === 'user'
+                        ? 'bg-ibm-blue-60'
+                        : message.role === 'system'
+                        ? 'bg-yellow-500/20'
+                        : message.error
                         ? 'bg-red-500/20'
                         : 'bg-ibm-gray-80'
                     }`}>
                       {message.role === 'user' ? (
                         <span className="text-sm font-semibold text-white">You</span>
+                      ) : message.role === 'system' ? (
+                        <Terminal className="h-4 w-4 text-yellow-400" />
                       ) : message.error ? (
                         <AlertTriangle className="h-4 w-4 text-red-400" />
                       ) : (
-                        <Atom className="h-4 w-4 text-ibm-blue-40" />
+                        <Brain className="h-4 w-4 text-ibm-blue-40" />
                       )}
                     </div>
                     
@@ -472,11 +458,14 @@ export default function QuantumChatbot() {
                       <div className={`rounded-lg p-4 ${
                         message.role === 'user'
                           ? 'bg-ibm-blue-80 border border-ibm-blue-60'
+                          : message.role === 'system'
+                          ? 'bg-yellow-500/10 border border-yellow-500/30'
                           : message.error
                           ? 'bg-red-500/10 border border-red-500/30'
                           : 'bg-ibm-gray-100 border border-ibm-gray-80'
                       }`}>
                         <p className={`text-sm leading-relaxed whitespace-pre-wrap ${
+                          message.role === 'system' ? 'text-yellow-100' :
                           message.error ? 'text-red-400' : 'text-white'
                         }`}>
                           {message.content}
@@ -525,13 +514,13 @@ export default function QuantumChatbot() {
                 {isLoading && (
                   <div className="flex gap-4">
                     <div className="flex-shrink-0 w-8 h-8 rounded bg-ibm-gray-80 flex items-center justify-center">
-                      <Atom className="h-4 w-4 text-ibm-blue-40 animate-spin" />
+                      <Brain className="h-4 w-4 text-ibm-blue-40 animate-pulse" />
                     </div>
                     <div className="flex-1">
                       <div className="bg-ibm-gray-100 border border-ibm-gray-80 rounded-lg p-4">
                         <div className="flex items-center gap-3 text-sm text-ibm-gray-50">
                           <Spinner className="h-4 w-4" />
-                          <span>Executing quantum circuit on {currentBackend?.name}...</span>
+                          <span>AURA QLM processing on {currentBackend?.name} • Gen {generation + 1}...</span>
                         </div>
                       </div>
                     </div>
