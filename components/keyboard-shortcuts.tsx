@@ -90,7 +90,7 @@ export function KeyboardShortcuts() {
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-white">Keyboard Shortcuts</h2>
-                <p className="text-sm text-white/60">Master dna::{'{'}{'}'}{'}'}::lang with these shortcuts</p>
+                <p className="text-sm text-white/60">Master dna::}{'{'}{'}'}{'}'}::lang with these shortcuts</p>
               </div>
             </div>
             <button

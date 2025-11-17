@@ -87,7 +87,7 @@ export default function LoginPage() {
           <div className="flex items-center justify-center gap-3 mb-4">
             <Brain className="w-10 h-10 text-blue-400 animate-pulse" />
             <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              dna::{'{'}{'}'}{'}'}::lang
+              dna::}{'{'}{'}'}{'}'}::lang
             </h1>
           </div>
           <p className="text-gray-400">

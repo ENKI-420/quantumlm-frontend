@@ -23,7 +23,7 @@ export default function PricingPage() {
           <div className="flex items-center justify-center gap-3">
             <Brain className="w-12 h-12 text-blue-400 animate-pulse" />
             <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              dna::{'{'}{'}'}{'}'}::lang Pricing
+              dna::}{'{'}{'}'}{'}'}::lang Pricing
             </h1>
           </div>
           <p className="text-xl text-gray-400">
