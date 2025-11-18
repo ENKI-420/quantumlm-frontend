@@ -12,6 +12,8 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
+import { CartButton } from '@/components/cart-button'
+import { useCart } from '@/lib/cart/cart-context'
 import {
   Brain, ShoppingCart, TrendingUp, Database, Sparkles,
   Filter, Search, Star, Download, DollarSign, Users,
@@ -36,6 +38,7 @@ interface MarketplaceItem {
 }
 
 export default function MarketplacePage() {
+  const { addItem } = useCart()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [selectedPriceFilter, setSelectedPriceFilter] = useState('all')
@@ -205,10 +208,7 @@ export default function MarketplacePage() {
               <Link href="/investors" className="hover:text-blue-400 transition-colors">
                 Investors
               </Link>
-              <Button className="bg-gradient-to-r from-blue-600 to-purple-600">
-                <ShoppingCart className="w-4 h-4 mr-2" />
-                Cart (0)
-              </Button>
+              <CartButton />
             </div>
           </div>
         </div>
@@ -406,7 +406,19 @@ export default function MarketplacePage() {
                             <div className="text-xs text-gray-500">monthly</div>
                           )}
                         </div>
-                        <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600">
+                        <Button
+                          size="sm"
+                          className="bg-gradient-to-r from-blue-600 to-purple-600"
+                          onClick={() => addItem({
+                            id: item.id,
+                            name: item.name,
+                            price: item.price,
+                            priceType: item.priceType,
+                            revenueShare: item.revenueShare,
+                            category: item.category,
+                            seller: item.seller
+                          })}
+                        >
                           <ShoppingCart className="w-4 h-4" />
                         </Button>
                       </div>
