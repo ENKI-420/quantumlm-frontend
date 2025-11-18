@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
+import './animations.css'
 
 export const metadata: Metadata = {
   title: 'dna::}{::lang - Quantum Computing as Easy as ChatGPT | AI-Powered Quantum SaaS',
