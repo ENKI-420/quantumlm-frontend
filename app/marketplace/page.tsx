@@ -116,7 +116,7 @@ export default function MarketplacePage() {
       price: 0,
       priceType: 'revenue-share',
       revenueShare: 20,
-      seller: 'dna::}{::lang',
+      seller: 'DNA Lang',
       rating: 5.0,
       downloads: 1247,
       icon: Brain,
@@ -193,7 +193,7 @@ export default function MarketplacePage() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
               <Brain className="w-8 h-8 text-blue-400 animate-pulse" />
-              <span className="text-xl font-bold font-mono">dna::{'}{'}{'}'}::lang</span>
+              <span className="text-xl font-bold font-mono">DNALang</span>
             </Link>
             <div className="flex items-center gap-4 text-sm">
               <Link href="/chat" className="hover:text-blue-400 transition-colors">
@@ -473,7 +473,7 @@ export default function MarketplacePage() {
         <div className="container mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-500">
-              © 2025 dna::{'}{'}{'}'}::lang. All rights reserved.
+              © 2025 DNALang. All rights reserved.
             </p>
             <div className="flex items-center gap-6 text-sm text-gray-500">
               <Link href="/" className="hover:text-white transition-colors">Home</Link>

@@ -111,7 +111,7 @@ export default function PricingPage() {
       highlight: 'Enterprise',
       features: [
         'Custom domain + branding',
-        'Remove dna::}{::lang branding',
+        'Remove DNA Lang branding',
         'Custom login/signup flows',
         'Dedicated infrastructure',
         'Priority support (1h SLA)',
@@ -192,7 +192,7 @@ export default function PricingPage() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
               <Brain className="w-8 h-8 text-blue-400 animate-pulse" />
-              <span className="text-xl font-bold font-mono">dna::}{'{'}{'}'}{'}'}::lang</span>
+              <span className="text-xl font-bold font-mono">DNA Lang</span>
             </Link>
             <div className="flex items-center gap-3">
               <Link href="/login">
@@ -521,7 +521,7 @@ export default function PricingPage() {
               },
               {
                 q: 'What\'s included in white-label pricing?',
-                a: 'Complete rebrand with your domain, colors, logo. Remove all dna::}{::lang branding. Dedicated infrastructure. Perfect for agencies and resellers.'
+                a: 'Complete rebrand with your domain, colors, logo. Remove all DNA Lang branding. Dedicated infrastructure. Perfect for agencies and resellers.'
               }
             ].map((faq, idx) => (
               <Card key={idx} className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 border-gray-700 p-6">
@@ -557,7 +557,7 @@ export default function PricingPage() {
         <div className="container mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-500">
-              © 2025 dna::}{'{'}{'}'}{'}'}::lang. All rights reserved.
+              © 2025 DNA Lang. All rights reserved.
             </p>
             <div className="flex items-center gap-6 text-sm text-gray-500">
               <Link href="/" className="hover:text-white transition-colors">Home</Link>

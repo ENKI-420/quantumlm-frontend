@@ -68,7 +68,7 @@ export default function CheckoutPage() {
           <div className="container mx-auto px-6 py-4">
             <Link href="/" className="flex items-center gap-3">
               <Brain className="w-8 h-8 text-blue-400 animate-pulse" />
-              <span className="text-xl font-bold font-mono">dna::{'}{'}{'}'}::lang</span>
+              <span className="text-xl font-bold font-mono">DNALang</span>
             </Link>
           </div>
         </nav>
@@ -108,7 +108,7 @@ export default function CheckoutPage() {
           <div className="container mx-auto px-6 py-4">
             <Link href="/" className="flex items-center gap-3">
               <Brain className="w-8 h-8 text-blue-400 animate-pulse" />
-              <span className="text-xl font-bold font-mono">dna::{'}{'}{'}'}::lang</span>
+              <span className="text-xl font-bold font-mono">DNALang</span>
             </Link>
           </div>
         </nav>
@@ -138,7 +138,7 @@ export default function CheckoutPage() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
               <Brain className="w-8 h-8 text-blue-400 animate-pulse" />
-              <span className="text-xl font-bold font-mono">dna::{'}{'}{'}'}::lang</span>
+              <span className="text-xl font-bold font-mono">DNALang</span>
             </Link>
             <Link href="/marketplace">
               <Button variant="ghost">

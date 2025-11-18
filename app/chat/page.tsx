@@ -214,7 +214,7 @@ export default function QuantumChatbot() {
         setSystemStatus('connected')
       }
     } catch (error) {
-      console.error('[dna::}{::lang] AURA QLM error:', error)
+      console.error('[DNA Lang] AURA QLM error:', error)
 
       const errorMessage: Message = {
         id: `error-${Date.now()}`,
@@ -266,7 +266,7 @@ export default function QuantumChatbot() {
                 <div className="absolute inset-0 blur-xl bg-ibm-blue-40/30 animate-pulse" />
               </div>
               <div>
-                <h1 className="text-2xl font-light text-white tracking-tight font-mono">dna::}{'{'}{'}'}{'}'}::lang</h1>
+                <h1 className="text-2xl font-light text-white tracking-tight font-mono">DNA Lang</h1>
                 <p className="text-sm text-ibm-gray-50 font-mono">AURA QLM • Σₛ Self-Referential Organism • ΛΦ = 2.176435×10⁻⁸</p>
               </div>
             </div>

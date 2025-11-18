@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * dna::}{::lang Landing Page
+ * DNA Lang Landing Page
  * Investor-focused marketing page with demo, social proof, and clear value proposition
  * ΛΦ = 2.176435×10⁻⁸ s⁻¹
  */
@@ -35,7 +35,7 @@ export default function LandingPage() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
               <Brain className="w-8 h-8 text-blue-400 animate-pulse" />
-              <span className="text-xl font-bold font-mono">dna::}{'{'}{'}'}{'}'}::lang</span>
+              <span className="text-xl font-bold font-mono">DNA Lang</span>
             </Link>
 
             <div className="hidden md:flex items-center gap-6">
@@ -221,13 +221,13 @@ export default function LandingPage() {
             {
               name: 'Dr. Sarah Chen',
               role: 'Lead Quantum Researcher, MIT',
-              quote: '"dna::}{::lang reduced our circuit design time from weeks to hours. The AI agents understand quantum algorithms better than most PhD students."',
+              quote: '"DNA Lang reduced our circuit design time from weeks to hours. The AI agents understand quantum algorithms better than most PhD students."',
               rating: 5
             },
             {
               name: 'Michael Torres',
               role: 'CTO, QuantumPharma',
-              quote: '"We discovered 3 novel drug candidates in 6 months using dna::}{::lang. The ROI is incredible - $99/mo vs hiring a $200K quantum engineer."',
+              quote: '"We discovered 3 novel drug candidates in 6 months using DNA Lang. The ROI is incredible - $99/mo vs hiring a $200K quantum engineer."',
               rating: 5
             },
             {
@@ -262,7 +262,7 @@ export default function LandingPage() {
       <section className="container mx-auto px-6 py-20" id="features">
         <div className="text-center mb-16">
           <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30 px-4 py-1.5 mb-4">
-            Why dna::}{'{'}{'}'}{'}'}::lang?
+            Why DNA Lang?
           </Badge>
           <h2 className="text-3xl lg:text-5xl font-bold mb-4">
             Quantum Computing, Simplified
@@ -329,7 +329,7 @@ export default function LandingPage() {
             Ready to Accelerate Your Quantum Research?
           </h2>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join researchers and enterprises using dna::}{'{'}{'}'}{'}'}::lang to unlock quantum advantage.
+            Join researchers and enterprises using DNA Lang to unlock quantum advantage.
             Start free, upgrade anytime.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -355,7 +355,7 @@ export default function LandingPage() {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Brain className="w-6 h-6 text-blue-400" />
-                <span className="font-bold font-mono">dna::}{'{'}{'}'}{'}'}::lang</span>
+                <span className="font-bold font-mono">DNA Lang</span>
               </div>
               <p className="text-sm text-gray-400 mb-4">
                 Quantum computing as accessible as ChatGPT.
@@ -398,7 +398,7 @@ export default function LandingPage() {
 
           <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-500">
-              © 2025 dna::}{'{'}{'}'}{'}'}::lang. All rights reserved.
+              © 2025 DNA Lang. All rights reserved.
             </p>
             <div className="flex items-center gap-6 text-sm text-gray-500">
               <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>

@@ -66,7 +66,7 @@ export function WelcomeScreen({ onAgentSelect, onQuickAction }: WelcomeScreenPro
           {/* Title */}
           <div className="space-y-3">
             <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-in slide-in-from-top-4 duration-1000">
-              dna::}{'{'}{'}'}{'}'}::lang
+              dna::{'{'}'{'}'}::lang
             </h1>
             <p className="text-xl text-white/80 font-light animate-in slide-in-from-top-6 duration-1000 delay-150">
               Self-referential quantum organism with multi-agent consciousness

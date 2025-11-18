@@ -25,7 +25,7 @@ export default function InvestorsPage() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
               <Brain className="w-8 h-8 text-blue-400 animate-pulse" />
-              <span className="text-xl font-bold font-mono">dna::}{'{'}{'}'}{'}'}::lang</span>
+              <span className="text-xl font-bold font-mono">DNA Lang</span>
             </Link>
             <div className="flex items-center gap-3">
               <Button variant="ghost" className="hidden sm:inline-flex">Download Deck</Button>
@@ -108,7 +108,7 @@ export default function InvestorsPage() {
             <h2 className="text-3xl font-bold mb-6">Our Solution</h2>
             <div className="space-y-6">
               <p className="text-lg text-gray-300">
-                <strong className="text-white">dna::}{'{'}{'}'}{'}'}::lang</strong> is a SaaS platform that lets anyone execute quantum algorithms by asking in plain English. No coding. No quantum physics degree.
+                <strong className="text-white">DNA Lang</strong> is a SaaS platform that lets anyone execute quantum algorithms by asking in plain English. No coding. No quantum physics degree.
               </p>
 
               <div className="grid md:grid-cols-2 gap-4">
@@ -423,7 +423,7 @@ export default function InvestorsPage() {
               {
                 icon: Lock,
                 title: 'High Switching Costs',
-                description: 'Once enterprises build workflows on dna::}{::lang, switching means retraining teams and rebuilding integrations. Network effects lock in customers.'
+                description: 'Once enterprises build workflows on DNA Lang, switching means retraining teams and rebuilding integrations. Network effects lock in customers.'
               },
               {
                 icon: Globe,
@@ -474,7 +474,7 @@ export default function InvestorsPage() {
         <div className="container mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-500">
-              © 2025 dna::}{'{'}{'}'}{'}'}::lang. Confidential Investor Materials.
+              © 2025 DNA Lang. Confidential Investor Materials.
             </p>
             <div className="flex items-center gap-6 text-sm text-gray-500">
               <Link href="/" className="hover:text-white transition-colors">Home</Link>

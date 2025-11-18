@@ -118,7 +118,7 @@ export default function NFTMarketplacePage() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
               <Brain className="w-8 h-8 text-blue-400 animate-pulse" />
-              <span className="text-xl font-bold font-mono">dna::{'}{'}{'}'}::lang</span>
+              <span className="text-xl font-bold font-mono">DNALang</span>
             </Link>
             <div className="flex items-center gap-4">
               <Link href="/marketplace">
