@@ -69,19 +69,29 @@ export interface Database {
   }
 }
 
-// Client-side Supabase client
-export const supabase = createClient<Database>(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+// Get Supabase URL and key with fallbacks
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+
+// Client-side Supabase client (optional - only if env vars are set)
+export const supabase = supabaseUrl && supabaseAnonKey
+  ? createClient<Database>(supabaseUrl, supabaseAnonKey)
+  : null
 
 // Server-side Supabase client
 export async function createServerClient() {
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return null
+  }
+
+  const { cookies } = await import('next/headers')
+  const { createServerClient: createSupabaseServerClient } = await import('@supabase/ssr')
   const cookieStore = await cookies()
 
   return createSupabaseServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         getAll() {
@@ -101,14 +111,16 @@ export async function createServerClient() {
   )
 }
 
-// Service role client (admin operations)
-export const supabaseAdmin = createClient<Database>(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false
-    }
-  }
-)
+// Service role client (admin operations) - optional
+export const supabaseAdmin = supabaseUrl && supabaseServiceRoleKey
+  ? createClient<Database>(
+      supabaseUrl,
+      supabaseServiceRoleKey,
+      {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false
+        }
+      }
+    )
+  : null

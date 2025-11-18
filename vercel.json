@@ -2,6 +2,12 @@
   "framework": "nextjs",
   "installCommand": "npm install --legacy-peer-deps",
   "buildCommand": "npm run build",
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "https://dnculjsqwigkivykedcf.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuY3VsanNxd2lna2l2eWtlZGNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI0ODMyNTgsImV4cCI6MjA3ODA1OTI1OH0.u6q47uPs0ztSEyO4bCX2hPXQiSCZfXNn6eNTRiD1rZ0",
+    "SUPABASE_SERVICE_ROLE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuY3VsanNxd2lna2l2eWtlZGNmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2MjQ4MzI1OCwiZXhwIjoyMDc4MDU5MjU4fQ.WtFshYWOOAF9qDBSO4deRLnRqL63N7tpzK-NXFWXh7A",
+    "QUANTUM_API_URL": "https://api.dnalang.dev"
+  },
   "headers": [
     {
       "source": "/api/(.*)",
